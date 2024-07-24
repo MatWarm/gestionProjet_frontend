@@ -6,7 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/fr';
 import dayjs from 'dayjs';
 
-function Reservation({open, onClose, annonce }) {
+function Reservation({ open, onClose, annonce, reservations }) {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [error, setError] = useState('');
@@ -21,14 +21,14 @@ function Reservation({open, onClose, annonce }) {
         console.log('Réservation effectuée:', {
             startDate: startDate ? startDate.valueOf() : null,
             endDate: endDate ? endDate.valueOf() : null
-          });
+        });
     };
 
-    // const shouldDisableDate = (date) => {
-    //     return reservations.some(reservation => 
-    //       date.isBetween(dayjs(reservation.start), dayjs(reservation.end), null, '[]')
-    //     );
-    //   };
+    const shouldDisableDate = (date) => {
+        return reservations.some(reservation =>
+            date.isBetween(dayjs(reservation.start), dayjs(reservation.end), null, '[]')
+        );
+    };
 
     const today = dayjs()
     const tomorrow = dayjs().add(1, 'day')
@@ -50,8 +50,8 @@ function Reservation({open, onClose, annonce }) {
                             onChange={(newValue) => {
                                 setStartDate(newValue);
                                 setEndDate(null); // Reset end date if start date changes
-                              }}
-                
+                            }}
+                            shouldDisableDate={shouldDisableDate}
                             renderInput={(params) => <TextField {...params} margin="normal" />}
                         />
                         <DatePicker
@@ -61,7 +61,7 @@ function Reservation({open, onClose, annonce }) {
                             minDate={startDate}
                             renderInput={(params) => <TextField {...params} margin="normal" />}
                             disabled={!startDate} // Disable end date picker if no start date
-
+                            shouldDisableDate={shouldDisableDate}
                         />
                         {error && (
                             <Typography color="error" variant="body2" style={{ marginTop: '16px' }}>
