@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Card, CardContent, Typography, Button, Dialog, DialogTitle, DialogContent } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Container, Card, CardContent, Typography, Button } from '@mui/material';
 // import DetailAnnonce from './components/DetailAnnonce';
 import Reservation from './component/Reservation';
 
@@ -9,8 +9,8 @@ function Annonces() {
   const [selectedAnnonce, setSelectedAnnonce] = useState(null);
 
   const annonces = [
-    { id: 1, title: 'Location de voiture - Renault Clio', description: 'Renault Clio 2020, 50€/jour' },
-    { id: 2, title: 'Location de voiture - Peugeot 208', description: 'Peugeot 208 2019, 45€/jour' },
+    { id: 1, title: 'Location de voiture - Renault Clio', description: 'Renault Clio 2020, 50€/jour', reservations: [{start: 1722087617000, end: 1722290400000 }] },
+    { id: 2, title: 'Location de voiture - Peugeot 208', description: 'Peugeot 208 2019, 45€/jour', reservations: [] },
     // Ajoutez plus d'annonces ici
   ];
 
@@ -55,12 +55,7 @@ function Annonces() {
           {/* <DetailAnnonce annonce={selectedAnnonce} /> */}
         </DialogContent>
       </Dialog>
-      <Dialog open={openReservation} onClose={handleCloseReservation}>
-        <DialogTitle>Réservation</DialogTitle>
-        <DialogContent>
-          <Reservation annonce={selectedAnnonce} />
-        </DialogContent>
-      </Dialog>
+      <Reservation open={openReservation} onClose={handleCloseReservation} annonce={selectedAnnonce} />
     </Container>
   );
 }
