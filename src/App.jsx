@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 // import { createTheme } from '@mui/material/styles';
 import { Drawer, List, ListItem, ListItemText, CssBaseline, Box } from '@mui/material';
 import Annonces from './pages/Annonces';
+import Login from './pages/Login';
 // import Profil from './Profil';
 // import MesReservations from './MesReservations';
-// import AjouterAnnonce from './AjouterAnnonce';
+import AjouterAnnonce from './pages/AjoutAnnonce';
 
 const drawerWidth = 240;
 
@@ -44,9 +45,10 @@ function App() {
           >
             <Routes>
               <Route path="/annonces" element={<Annonces />} />
+              <Route path="/" element={<Login />} />
               {/* <Route path="/profil" element={<Profil />} /> */}
               {/* <Route path="/mes-reservations" element={<MesReservations />} /> */}
-              {/* <Route path="/ajouter-annonce" element={<AjouterAnnonce />} /> */}
+              <Route path="/ajouter-annonce" element={<AjouterAnnonce />} />
             </Routes>
           </Box>
         </Box>
