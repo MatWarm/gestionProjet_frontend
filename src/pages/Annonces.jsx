@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, Container, Card, CardContent, Typography, Button } from '@mui/material';
 // import DetailAnnonce from './components/DetailAnnonce';
 import Reservation from './component/Reservation';
+import axios from 'axios';
 
 function Annonces() {
+  const [annonces, setAnnonces] = useState([]);
   const [openDetail, setOpenDetail] = useState(false);
   const [openReservation, setOpenReservation] = useState(false);
   const [selectedAnnonce, setSelectedAnnonce] = useState(null);
 
-  const annonces = [
-    { id: 1, title: 'Location de voiture - Renault Clio', description: 'Renault Clio 2020, 50€/jour', reservations: [{start: 1722087617000, end: 1722290400000 }, {start: 1723125917000, end: 1723240800000 }] },
-    { id: 2, title: 'Location de voiture - Peugeot 208', description: 'Peugeot 208 2019, 45€/jour', reservations: [] },
-    // Ajoutez plus d'annonces ici
-  ];
+
+  useEffect(() => {
+    const fetchAnnonces = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:3001/annonce/');
+        console.log(response.data);
+        setAnnonces(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des annonces', error);
+      }
+    };
+
+    fetchAnnonces();
+  }, []);
 
   const handleOpenDetail = (annonce) => {
     setSelectedAnnonce(annonce);
@@ -55,9 +66,7 @@ function Annonces() {
           {/* <DetailAnnonce annonce={selectedAnnonce} /> */}
         </DialogContent>
       </Dialog>
-
-      <Reservation open={openReservation} onClose={handleCloseReservation} annonce={selectedAnnonce} reservations={selectedAnnonce ? selectedAnnonce.reservations : []} />
-    
+      <Reservation open={openReservation} onClose={handleCloseReservation} annonce={selectedAnnonce} />
     </Container>
   );
 }

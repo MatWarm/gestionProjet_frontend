@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+// import { createTheme } from '@mui/material/styles';
 import { Drawer, List, ListItem, ListItemText, CssBaseline, Box } from '@mui/material';
 import Annonces from './pages/Annonces';
 // import Profil from './Profil';
 // import MesReservations from './MesReservations';
 // import AjouterAnnonce from './AjouterAnnonce';
-
-const theme = createTheme();
 
 const drawerWidth = 240;
 
