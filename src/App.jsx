@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import CreeCompte from "./pages/CreeCompte";
 // import Profil from './Profil';
 // import MesReservations from './MesReservations';
-// import AjouterAnnonce from './AjouterAnnonce';
+import AjouterAnnonce from './pages/AjoutAnnonce';
 
 const drawerWidth = 240;
 
@@ -45,7 +45,6 @@ function App() {
                 <ListItemText primary="Nous rejoindre" />
               </ListItem>
             </List>
-
           </Drawer>
           <Box
             component="main"
@@ -57,7 +56,7 @@ function App() {
               <Route path="/cree-compte" element={<CreeCompte/>} />
               {/* <Route path="/profil" element={<Profil />} /> */}
               {/* <Route path="/mes-reservations" element={<MesReservations />} /> */}
-              {/* <Route path="/ajouter-annonce" element={<AjouterAnnonce />} /> */}
+              <Route path="/ajouter-annonce" element={<AjouterAnnonce />} />
             </Routes>
           </Box>
         </Box>
