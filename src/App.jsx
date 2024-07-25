@@ -1,13 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-// import { createTheme } from '@mui/material/styles';
 import { Drawer, List, ListItem, ListItemText, CssBaseline, Box } from '@mui/material';
 import Annonces from './pages/Annonces';
 import Login from './pages/Login';
 import CreeCompte from "./pages/CreeCompte";
-// import Profil from './Profil';
-// import MesReservations from './MesReservations';
 import AjouterAnnonce from './pages/AjoutAnnonce';
+import ProtectedRoute from './ProtectedRoute'; // Importer le composant de route protégée
+import Cookies from 'js-cookie';
 
 const drawerWidth = 240;
 
@@ -52,11 +51,9 @@ function App() {
           >
             <Routes>
               <Route path="/annonces" element={<Annonces />} />
-              <Route path="/connexion" element={<Login/>} />
-              <Route path="/cree-compte" element={<CreeCompte/>} />
-              {/* <Route path="/profil" element={<Profil />} /> */}
-              {/* <Route path="/mes-reservations" element={<MesReservations />} /> */}
-              <Route path="/ajouter-annonce" element={<AjouterAnnonce />} />
+              <Route path="/connexion" element={<Login />} />
+              <Route path="/cree-compte" element={<CreeCompte />} />
+              <Route path="/ajouter-annonce" element={<ProtectedRoute element={AjouterAnnonce} />} />
             </Routes>
           </Box>
         </Box>

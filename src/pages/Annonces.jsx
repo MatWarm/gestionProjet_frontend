@@ -3,8 +3,11 @@ import { Dialog, DialogTitle, DialogContent, Container, Card, CardContent, Typog
 // import DetailAnnonce from './components/DetailAnnonce';
 import Reservation from './component/Reservation';
 import axios from 'axios';
+import { useNavigate  } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 function Annonces() {
+  const navigate = useNavigate()
   const [annonces, setAnnonces] = useState([]);
   const [openDetail, setOpenDetail] = useState(false);
   const [openReservation, setOpenReservation] = useState(false);
@@ -35,6 +38,9 @@ function Annonces() {
   };
 
   const handleOpenReservation = (annonce) => {
+    if (!Cookies.get('token')) {
+      navigate('/connexion')
+    }
     setSelectedAnnonce(annonce);
     setOpenReservation(true);
   };
