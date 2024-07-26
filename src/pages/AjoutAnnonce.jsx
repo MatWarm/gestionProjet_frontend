@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Grid, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
-
+import Cookies from 'js-cookie'
 
 
 const AjouterAnnonce = () => {
@@ -16,6 +16,7 @@ const AjouterAnnonce = () => {
         ville: '',
         cp: '',
         marque: '',
+        prix_location: '',
         nbr_place: 5,
     });
 
@@ -64,11 +65,17 @@ const AjouterAnnonce = () => {
           description: sanitizeInput(formData.description),
           ville: sanitizeInput(formData.ville),
           marque: sanitizeInput(formData.marque),
-          id_compte: 1,
+          prix_location: sanitizeInput(formData.prix_location),
+          id_compte: Cookies.get('id'),
         };
 
+        const token = Cookies.get('token');
         try {
-            const response = await axios.post('http://127.0.0.1:3001/annonce', sanitizedData);
+            const response = await axios.post('http://127.0.0.1:3001/annonce', sanitizedData, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Ajouter le JWT token dans les headers
+                  }
+            });
             console.log('Annonce créée:', response.data);
             navigate('/annonces')
         } catch (error) {
@@ -125,6 +132,17 @@ const AjouterAnnonce = () => {
                             label="Code Postal"
                             name="cp"
                             value={formData.cp}
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                            type="input"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            label="Prix en euro par jour"
+                            name="prix_location"
+                            value={formData.prix_location}
                             onChange={handleChange}
                             fullWidth
                             required
