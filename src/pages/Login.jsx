@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // État pour stocker le message d'erreur
 
   const handleClick = async () => {
     const loginData = {
@@ -50,12 +52,15 @@ function Login({ setIsAuthenticated }) {
           navigate('/annonces');
         } else {
           console.log("Échec de la récupération des informations");
+          setError("Erreur lors de la récupération des informations.");
         }
       } else {
         console.error('Erreur de connexion:', response.statusText);
+        setError("Adresse e-mail ou mot de passe incorrect.");
       }
     } catch (error) {
       console.error('Erreur de réseau:', error);
+      setError("Erreur de réseau. Veuillez réessayer.");
     }
   };
 
@@ -69,8 +74,9 @@ function Login({ setIsAuthenticated }) {
       p={3}
     >
       <h1>Connexion</h1>
+      {error && <Typography color="error">{error}</Typography>}
       <TextField
-        label="Nom d'utilisateur"
+        label="Adresse e-mail"
         variant="outlined"
         margin="normal"
         value={username}

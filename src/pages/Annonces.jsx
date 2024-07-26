@@ -55,23 +55,15 @@ function Annonces() {
       {annonces.map((annonce) => (
         <Card key={annonce.id} style={{ marginTop: '16px' }}>
           <CardContent>
-            <Typography variant="h5">{annonce.title}</Typography>
+            <Typography variant="h5">{annonce.titre}</Typography>
             <Typography variant="body2">{annonce.description}</Typography>
-            <Button variant="contained" color="primary" onClick={() => handleOpenDetail(annonce)} style={{ margin: '8px' }}>
-              Détail
-            </Button>
+            <Typography variant="body2">{annonce.prix_location} € / jour</Typography>
             <Button variant="contained" color="secondary" onClick={() => handleOpenReservation(annonce)} style={{ margin: '8px' }}>
               Réserver
             </Button>
           </CardContent>
         </Card>
       ))}
-      <Dialog open={openDetail} onClose={handleCloseDetail}>
-        <DialogTitle>Détails de l'annonce</DialogTitle>
-        <DialogContent>
-          {/* <DetailAnnonce annonce={selectedAnnonce} /> */}
-        </DialogContent>
-      </Dialog>
       <Reservation open={openReservation} onClose={handleCloseReservation} annonce={selectedAnnonce} />
     </Container>
   );
