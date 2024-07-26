@@ -6,18 +6,25 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import 'dayjs/locale/fr';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function Reservation({ open, onClose, annonce, }) {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [reservations, setReservations] = useState([]);
     const [error, setError] = useState('');
+    const token = Cookies.get('token'); 
 
     useEffect(() => {
         if (annonce && open) {
+            
             const fetchReservations = async () => {
                 try {
-                    const response = await axios.get(`http://127.0.0.1:3001/reservation/voiture/${annonce.id}`);
+                    const response = await axios.get(`http://127.0.0.1:3001/reservation/voiture/${annonce.id}`, {
+                        headers: {
+                          'Authorization': `Bearer ${token}` 
+                        }
+                      });
                     console.log(response.data);
                     setReservations(response.data);
                 } catch (error) {
@@ -39,11 +46,15 @@ function Reservation({ open, onClose, annonce, }) {
 
         try {
             const response = await axios.post('http://127.0.0.1:3001/reservation', {
-              date_debut: startDate.valueOf(),
-              date_fin: endDate.valueOf(),
-              id_compte: 1, // ID de l'utilisateur connecté
-              id_annonce: annonce.id, // ID de l'annonce
-            });
+                date_debut: startDate.valueOf(),
+                date_fin: endDate.valueOf(),
+                id_compte: Cookies.get('id'), 
+                id_annonce: annonce.id,
+              }, {
+                headers: {
+                  'Authorization': `Bearer ${Cookies.get('token')}`
+                }
+              });
             console.log('Réservation effectuée:', response.data);
             onClose(); // Fermer le dialogue après la réservation
           } catch (error) {

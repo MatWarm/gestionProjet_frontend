@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import CreeCompte from "./pages/CreeCompte";
 import AjouterAnnonce from './pages/AjoutAnnonce';
 import ProtectedRoute from './ProtectedRoute';
+import MesReservations from './pages/MesReservations'; 
 import Cookies from 'js-cookie';
 
 const drawerWidth = 240;
@@ -35,17 +36,10 @@ function App() {
               <ListItem button component={Link} to="/annonces">
                 <ListItemText primary="Annonces" />
               </ListItem>
-              <ListItem button component={Link} to="/profil">
-                <ListItemText primary="Profil" />
-              </ListItem>
-              <ListItem button component={Link} to="/mes-reservations">
-                <ListItemText primary="Mes reservations" />
-              </ListItem>
-              <ListItem button component={Link} to="/ajouter-annonce">
-                <ListItemText primary="Ajouter annonce" />
-              </ListItem>
+              
               {!isAuthenticated && (
                 <>
+                
                   <ListItem button component={Link} to="/connexion">
                     <ListItemText primary="Connexion" />
                   </ListItem>
@@ -55,9 +49,20 @@ function App() {
                 </>
               )}
               {isAuthenticated && (
+                <>
+                <ListItem button component={Link} to="/profil">
+                <ListItemText primary="Profil" />
+              </ListItem>
+              <ListItem button component={Link} to="/mes-reservations">
+                <ListItemText primary="Mes reservations" />
+              </ListItem>
+              <ListItem button component={Link} to="/ajouter-annonce">
+                <ListItemText primary="Ajouter annonce" />
+              </ListItem>
                 <ListItem>
                   <LogoutButton setIsAuthenticated={setIsAuthenticated} />
                 </ListItem>
+                </>
               )}
             </List>
           </Drawer>
@@ -70,6 +75,7 @@ function App() {
               <Route path="/connexion" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
               <Route path="/cree-compte" element={<CreeCompte />} />
               <Route path="/ajouter-annonce" element={<ProtectedRoute element={AjouterAnnonce} />} />
+              <Route path="/mes-reservations" element={<ProtectedRoute element={MesReservations} />} />
             </Routes>
           </Box>
         </Box>
