@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import { useNavigate  } from 'react-router-dom';
 
 function CreeCompte() {
     const [name, setName] = useState('');
@@ -9,6 +10,7 @@ function CreeCompte() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate()
 
     // Définir la fonction de gestionnaire d'événements
     const handleClick = () => {
@@ -34,6 +36,7 @@ function CreeCompte() {
         }).then(response => {
             if (response.ok) {
                 console.log('Compte créé');
+                navigate('/connexion')
             } else {
                 console.error('Erreur lors de la création du compte');
             }
